@@ -1,0 +1,77 @@
+---
+title: "pokemon"
+output: html_notebook
+---
+
+This Pokemon data set provides basic information on 721 Pokemon up to the 6th generation in the Pokemon games (not including Pokemon Go or the Pokemon card game). The data set includes the Pokemon name, number, first and second type, and basic stats: HP, Attack, Defense, Special Attack, Special Defense, and Speed. In Pokemon, you play as a Pokemon trainer who catch and train Pokemons to build a team in order to defeat foes/gym leaders. Different aspects of a Pokemon may make them more desirable to include on your team. With this data set, I wanted to understand if there was any balancing of basic stats so that not just a handful of Pokemons were the chasers of the game. To explore this, I asked 3 specific questions that I wanted to answer with R:
+
+1)  Is there a strongest type of pokemon?
+2)  Is there an inverse relationship between Special Attack and Special Defense?
+3)  Is there an inverse relationship between Special Attack and Speed?
+
+# Loading in tidyverse
+
+```{r}
+library(tidyverse)
+```
+
+# Reading in data
+
+```{r}
+Pokemon_df <- read_csv("Pokemon.csv")
+```
+
+Q1) Is there a strongest type 1 Pokemon? Here I grouped by all the different Type 1 pokemons and calculated the average overall Attack within each type. I tried to create a bar graph to show the results from the table but was unable to get it to work. I excluded type 2 pokemons to keep it more simple with just one attribute. According to the mean Attacks, Dragon types seem to be the strongest in the first 6 generations of pokemon.
+
+```{r}
+Pokemon_df %>%
+  group_by(`Type 1`) %>%
+  summarize(
+    mean_Attack = mean(Attack)
+  ) 
+
+data <- Pokemon_df %>%
+  name= c( Bug, Dark, Dragon, Electric, Fairy, Fighting, Fire, Flying, Ghost, Grass)
+  values = c(70.971, 88.3871, 112.125, 69.0909, 61.5294, 96.7778, 84.7692, 78.75, 73.7813, 73.2143)
+)
+
+ggplot(Pokemon_df, aes(x= name, y=values) +
+  geom_bar(stat="identity")
+```
+
+# Visualization
+
+Q2: Is there an inverse relationship between Special Attack and Special Defense?
+
+I want to create a scatter plot with special attack at the x-axis, special defense at the y-axis, and highlight different generations to also see if there was a generational difference. I used ggplot2 with geom_point to create a scatterplot of the data. There seems to be a positive correlation between special attack and special defense so there is no inverse relationship between the two.
+
+```{r}
+
+library(ggplot2)
+Pokemon_df %>%
+  ggplot() +
+    geom_point(mapping = aes(x= SpAtk, y= SpDef, color= Generation)
+    )
+```
+
+Q3: Is there an inverse relationship between Special Attack and Speed?
+
+Similarly I plotted special attack vs speed using a scatterplot for all Pokemons included in the data set using ggplot geom_point. From the plot, there seems to be a positive correlation between special attack and speed
+
+```{r}
+
+library(ggplot2)
+
+Pokemon_df %>%
+  ggplot() +
+    geom_point(mapping = aes(x= SpAtk, y= Speed, color= Generation)
+    )
+```
+
+# Conclusion + Implications
+
+Based on findings from question 2 and 3, there does not seem to be an inverse relationship between the stats of interest which suggests that there isn't an overall power balance between basic stats in Pokemon. This is a broad conclusion that does not have too much substance as my data analysis lacks statistical analysis. Another major caveate of this analysis comes from the limited data itself. The Pokemon data I used did not include data on evolutions of Pokemons. When a Pokemon evolves, it is expected that its stats will scale so this may be contributing to the positive correlation between special attack vs special defense and special attack vs speed.
+
+# Citations:
+
+<https://www.kaggle.com/datasets/abcsds/pokemon?resource=download>
