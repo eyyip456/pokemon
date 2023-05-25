@@ -8,6 +8,7 @@ This Pokemon data set provides basic information on 721 Pokemon up to the 6th ge
 
 3) Is there an inverse relationship between Special Attack and Speed?
 
-Sorry I am having trouble recording and uploading my video from my laptop and mayb have to do so once I go home to my desktop later today.
+Presentation: https://youtu.be/Ns0p62O1C1M
+
 Data set: https://www.kaggle.com/datasets/abcsds/pokemon?resource=download
 Data was analysed using the tidyverse package.
